@@ -74,28 +74,39 @@ public class Pose {
         return new Pose(anotherPos.getX() + x, anotherPos.getY() + y, 0.0);
     }
 
+    public double getInd(int ind) {
+        if(ind == 0) return x;
+        return y;
+    }
+
+    public void setInd(int ind, double val) {
+        if(ind == 0) x = val;
+        else y = val;
+    }
+
     // things to note for injectPath
     // using Pose's is kinda pointless cuz we're rlly not taking advantage of hte heading component
     // so ig ignore those values until we figure how to take advantage of them
 
-    public static ArrayList<Pose> injectPath(ArrayList<Pose> path, double spacing) {
-        ArrayList<Pose> newPath = new ArrayList<Pose>();
+    // public static ArrayList<Pose> injectPath(ArrayList<Pose> path, double spacing) {
+    //     ArrayList<Pose> newPath = new ArrayList<Pose>();
 
 
-        for(int i = 0; i < (int)path.size() - 1; i++) {
-            Pose curDif = path.get(i).dif(path.get(i + 1)); // getting the actual vector/path between the two adjacent waypoints
-            int pointsOnPath = (int)Math.ceil(curDif.length() / spacing); // counting amt of points on the path
-            curDif.rescale(spacing); // rescales so that the length of the vector is "spacing" instead of whatever it is rn
-            for(int j = 0; j < pointsOnPath; j++) { // inject points for however many points need to be between them
-                newPath.add(path.get(i)); // add the point
-                Pose newPos = path.get(i).add(curDif); // update it so its an extra spacing distance away
-                path.set(i, newPos); // update the new point we add is that distance
-            }
-        }
+    //     for(int i = 0; i < (int)path.size() - 1; i++) {
+    //         Pose curDif = path.get(i).dif(path.get(i + 1)); // getting the actual vector/path between the two adjacent waypoints
+    //         int pointsOnPath = (int)Math.ceil(curDif.length() / spacing); // counting amt of points on the path
+    //         curDif.rescale(spacing); // rescales so that the length of the vector is "spacing" instead of whatever it is rn
+    //         for(int j = 0; j < pointsOnPath; j++) { // inject points for however many points need to be between them
+    //             newPath.add(path.get(i)); // add the point
+    //             Pose newPos = path.get(i).add(curDif); // update it so its an extra spacing distance away
+    //             path.set(i, newPos); // update the new point we add is that distance
+    //         }
+    //     }
 
-        newPath.add(path.get((int)path.size() - 1)); // add the last point
+    //     newPath.add(path.get((int)path.size() - 1)); // add the last point
 
-        return newPath;
-    }
+    //     return newPath;
+    // }
     
 }
+
