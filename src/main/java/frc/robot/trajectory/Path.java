@@ -35,6 +35,13 @@ public class Path {
         return ret;
     }
 
+    public void modifyInd(int poseInd, int dimInd, double value) {
+        Pose modify = path.get(poseInd);
+        if(dimInd == 0) modify.setX(value);
+        if(dimInd == 1) modify.setY(value);
+        path.set(poseInd, modify);
+    }
+
     public static Path injectPath(Path path, double spacing) {
         Path newPath = new Path(new ArrayList<Pose>());
 
@@ -72,7 +79,8 @@ public class Path {
 				{
 					double aux = newPath.getPose(i).getInd(j);
 					newPath.getPose(i).setInd(j, newPath.getPose(i).getInd(j) + weight_data * (path.getPose(i).getInd(j) - newPath.getPose(i).getInd(j)) + weight_smooth * (newPath.getPose(i-1).getInd(j) + newPath.getPose(i+1).getInd(j) - (2.0 * newPath.getPose(i).getInd(j))));
-					// question does this actually modify the initial arraylist????? i forgor how java works tbh
+					newPath.modifyInd(i, j, newPath.getPose(i).getInd(j) + weight_data * (path.getPose(i).getInd(j) - newPath.getPose(i).getInd(j)) + weight_smooth * (newPath.getPose(i-1).getInd(j) + newPath.getPose(i+1).getInd(j) - (2.0 * newPath.getPose(i).getInd(j))));
+                    // question does this actually modify the initial arraylist????? i forgor how java works tbh
                     change += Math.abs(aux - newPath.getPose(i).getInd(j));	
 				}					
 		}
